@@ -1,0 +1,36 @@
+{
+  "HareConf": {
+    "appearance": {
+      "theme": {
+        "mode": "system",
+        "light": "bamboo",
+        "dark": "bamboo"
+      }
+    },
+    "language": {
+      "names": [
+        "lua",
+        "json",
+        "toml",
+        "javascript",
+        "bash",
+        "latex",
+        "camke",
+        "cpp",
+        "css",
+        "html",
+        "java",
+        "just",
+        "make",
+        "markdown",
+        "python",
+        "rust",
+        "sql",
+        "svelte",
+        "systemd",
+        "typos",
+        "yaml"
+      ]
+    }
+  }
+}
