@@ -2,16 +2,19 @@
 --
 -- [https://github.com/stevearc/conform.nvim]
 return {
-  'stevearc/conform.nvim',
-  dependencies = { 'mason-org/mason.nvim' },
-  opts = {
-    formatters_by_ft = {
-      lua = { 'stylua' },
-      json = { 'prettier' },
-      jsonc = { 'prettier' },
-      html = { 'prettier' },
-      javascript = { 'prettier' },
-      typescript = { 'prettier' },
+    'stevearc/conform.nvim',
+    dependencies = { 'mason-org/mason.nvim' },
+    opts = {
+        formatters_by_ft = {
+            lua = { 'stylua' },
+            json = { 'prettier' },
+            jsonc = { 'prettier' },
+            html = { 'prettier' },
+            javascript = { 'prettier' },
+            typescript = { 'prettier' },
+        },
+        format_on_save = {
+            timeout_ms = 5000,
+        },
     },
-  },
 }

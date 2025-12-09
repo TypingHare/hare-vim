@@ -29,7 +29,8 @@
         "svelte",
         "systemd",
         "typos",
-        "yaml"
+        "yaml",
+        "kotlin"
       ]
     }
   }

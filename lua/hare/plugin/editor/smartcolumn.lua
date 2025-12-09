@@ -17,6 +17,10 @@ return {
             end
 
             local filetype = vim.bo.filetype
+            if filetype == '' then
+                return MAX_WIDTH
+            end
+
             local exclude_filetypes = hc.config.system.filetype.exclude
             if vim.tbl_contains(exclude_filetypes, filetype) then
                 return MAX_WIDTH
