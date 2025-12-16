@@ -30,7 +30,8 @@
         "systemd",
         "typos",
         "yaml",
-        "kotlin"
+        "kotlin",
+        "go"
       ]
     }
   }

@@ -13,13 +13,10 @@ vim.opt_local.spell = false
 
 vim.cmd 'SoftWrapMode'
 
+-- TODO: Remove this
 require('conform').setup {
-  formatters_by_ft = {
-    tex = { 'latexindent' },
-    plaintex = { 'latexindent' },
-  },
-  format_on_save = {
-    lsp_fallback = true,
-    timeout_ms = 2000,
-  },
+    formatters_by_ft = {
+        tex = { 'latexindent' },
+        plaintex = { 'latexindent' },
+    },
 }

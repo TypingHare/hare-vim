@@ -16,8 +16,20 @@ hc.fn.set_language_config {
             ruler = { columns = { 100 } },
         },
     },
+    go = {
+        filetypes = { 'go' },
+        buffer_config = {
+            treesitter = { name = 'go' },
+            lsp = { name = 'gopls' },
+            linter = { name = 'golangci-lint' },
+            formatter = { name = 'gofumpt' },
+            ruler = { columns = { 100 } },
+        },
+    },
 }
 hc.fn.enable_languages_in_config()
+
+hc.config.editor.filetype['tex'].treesitter.highlight_enabled = false
 
 hc.builtin.apply_config(hc.config)
 hc.builtin.install_treesitters()
