@@ -26,6 +26,15 @@ hc.fn.set_language_config {
             ruler = { columns = { 100 } },
         },
     },
+    latex = {
+        filetypes = { 'tex', 'bib' },
+        buffer_config = {
+            treesitter = { name = 'bibtex', highlight_enabled = false },
+            lsp = { name = 'texlab' },
+            formatter = { name = 'latexindent' },
+            ruler = { enabled = false },
+        },
+    },
 }
 hc.fn.enable_languages_in_config()
 

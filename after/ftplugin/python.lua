@@ -27,7 +27,6 @@ end
 
 -- Support Ruff
 local ruff_line_length = get_ruff_line_length()
-vim.print('Ruff line length:', ruff_line_length)
 require('hare-conf').fn.set_buffer_config({ 'python' }, {
     ruler = { columns = { ruff_line_length } },
 })
