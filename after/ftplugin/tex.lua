@@ -1,3 +1,6 @@
+-- Disable vimtex syntax highlighting
+vim.g.vimtex_syntax_enabled = 0
+
 vim.opt_local.spell = true
 vim.opt_local.wrap = true
 vim.opt_local.linebreak = true
