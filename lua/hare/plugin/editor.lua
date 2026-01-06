@@ -10,7 +10,6 @@ return {
     {
         'saghen/blink.cmp',
         dependencies = { 'rafamadriz/friendly-snippets' },
-        version = '1.*',
         opts = {
             keymap = {
                 preset = 'default',
@@ -163,5 +162,48 @@ return {
             },
         },
         config = true,
+    },
+
+    -- This plugin makes moving around in your code extremely fast by letting you jump to any
+    -- visible location with a few keystrokes.
+    --
+    -- [https://github.com/folke/flash.nvim]
+    {
+        'folke/flash.nvim',
+        event = 'VeryLazy',
+        keys = {
+            {
+                's',
+                mode = { 'n', 'x', 'o' },
+                function()
+                    require('flash').jump()
+                end,
+                desc = 'Flash',
+            },
+            {
+                'S',
+                mode = { 'n', 'x', 'o' },
+                function()
+                    require('flash').treesitter()
+                end,
+                desc = 'Flash Treesitter',
+            },
+        },
+    },
+
+    -- This plugin highlights and searches for todo comments like `TODO`, `HACK`, `BUG` in your
+    -- codebase.
+    --
+    -- [https://github.com/folke/todo-comments.nvim]
+    {
+        'folke/todo-comments.nvim',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+    },
+
+    -- This plugin shows non-intrusive loading indicators (spinners) for LSP operations in Neovim.
+    --
+    -- [https://github.com/j-hui/fidget.nvim]
+    {
+        'j-hui/fidget.nvim',
     },
 }

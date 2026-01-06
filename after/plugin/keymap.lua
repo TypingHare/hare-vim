@@ -96,11 +96,3 @@ end, { desc = 'Format File', silent = true })
 
 -- Rename the identifier under the cursor.
 vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = 'Rename Identifier', silent = true })
-
--- Show diagnostics under the cursor.
-vim.keymap.set(
-    'n',
-    '<leader>cd',
-    vim.diagnostic.open_float,
-    { desc = 'Show Diagnostics', silent = true }
-)
