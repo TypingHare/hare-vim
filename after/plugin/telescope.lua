@@ -1,7 +1,28 @@
-local ok, _ = pcall(require, 'telescope')
+local ok, telescope = pcall(require, 'telescope')
 if not ok then
     return
 end
+
+telescope.setup {
+    defaults = {
+        layout_strategy = 'horizontal',
+        layout_config = {
+            prompt_position = 'top',
+            preview_width = 0.6,
+        },
+        sorting_strategy = 'ascending',
+        scroll_strategy = 'cycle',
+    },
+    pickers = {
+        find_files = {
+            hidden = true,
+        },
+        oldfiles = {
+            hidden = true,
+            -- sorter = require('telescope.sorters').get_substr_matcher(),
+        },
+    },
+}
 
 -- Find files in the project scope.
 vim.keymap.set(
@@ -27,10 +48,10 @@ end, { desc = 'Find Old Files', silent = true })
 
 -- Find files that have the same extension as the file in the current buffer.
 vim.keymap.set('n', '<leader>ft', function()
-    local telescope = require 'telescope.builtin'
+    local builtin = require 'telescope.builtin'
     local ext = vim.fn.expand '%:e'
 
-    telescope.find_files {
+    builtin.find_files {
         find_command = { 'fd', '--type', 'f', '--extension', ext },
         prompt_title = 'Files with extension: ' .. ext,
     }

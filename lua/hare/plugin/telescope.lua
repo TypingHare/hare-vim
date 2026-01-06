@@ -27,25 +27,5 @@ return {
             'nvim-telescope/telescope-fzf-native.nvim',
             'nvim-telescope/telescope-file-browser.nvim',
         },
-        opts = {
-            defaults = {
-                layout_strategy = 'horizontal',
-                layout_config = {
-                    prompt_position = 'top',
-                    preview_width = 0.6,
-                },
-                sorting_strategy = 'ascending',
-                scroll_strategy = 'cycle',
-            },
-            pickers = {
-                find_files = {
-                    hidden = true,
-                },
-                oldfiles = {
-                    hidden = true,
-                    sorter = require('telescope.sorters').get_substr_matcher(),
-                },
-            },
-        },
     },
 }
