@@ -1,0 +1,39 @@
+{
+  "HareConf": {
+    "appearance": {
+      "netrw": {
+        "enabled": true
+      },
+      "theme": {
+        "mode": "system",
+        "light": "bamboo",
+        "dark": "bamboo"
+      }
+    },
+    "language": {
+      "names": [
+        "lua",
+        "json",
+        "toml",
+        "javascript",
+        "bash",
+        "cpp",
+        "css",
+        "html",
+        "java",
+        "just",
+        "make",
+        "markdown",
+        "python",
+        "rust",
+        "sql",
+        "svelte",
+        "systemd",
+        "typos",
+        "yaml",
+        "kotlin",
+        "go"
+      ]
+    }
+  }
+}
