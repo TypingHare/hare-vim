@@ -1,6 +1,3 @@
--- Disable vimtex syntax highlighting.
-vim.g.vimtex_syntax_enabled = 0
-
 -- Disable the spell check, use typos instead.
 vim.opt_local.spell = false
 
@@ -10,3 +7,5 @@ vim.keymap.set('n', '^', 'g^', { buffer = true, noremap = true, silent = true })
 vim.keymap.set('n', '$', 'g$', { buffer = true, noremap = true, silent = true })
 
 vim.cmd 'SoftWrapMode'
+
+-- additional_vim_regex_highlighting = true,

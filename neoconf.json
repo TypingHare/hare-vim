@@ -1,9 +1,6 @@
 {
   "HareConf": {
     "appearance": {
-      "netrw": {
-        "enabled": true
-      },
       "theme": {
         "mode": "system",
         "light": "bamboo",
@@ -32,7 +29,8 @@
         "typos",
         "yaml",
         "kotlin",
-        "go"
+        "go",
+        "latex"
       ]
     }
   }
