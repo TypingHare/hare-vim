@@ -9,7 +9,7 @@ smartcolumn.setup {
         local DEFAULT_WIDTH = '100'
 
         local ok_hare, hare = pcall(require, 'hare-conf')
-        if not ok_hare then
+        if not ok_hare or not hare or not hare.setup_completed then
             return DEFAULT_WIDTH
         end
 
