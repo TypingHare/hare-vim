@@ -67,3 +67,8 @@ vim.keymap.set(
     require('telescope.builtin').lsp_definitions,
     { desc = 'Go to Definition', silent = true }
 )
+
+vim.keymap.set('n', 'grr', require('telescope.builtin').lsp_references, {
+    desc = 'Go to References',
+    silent = true,
+})
