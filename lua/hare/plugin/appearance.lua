@@ -61,7 +61,7 @@ return {
                 },
             },
             filesystem = {
-                group_empty_dirs = true,
+                -- group_empty_dirs = true,
                 filtered_items = {
                     show_hidden_count = false,
                     hide_dotfiles = true,

@@ -5,8 +5,14 @@ require('conform').setup {
     formatters = {
         golines = {
             command = 'golines',
-            args = { '-m', '100' },
+            args = { '-m', '80' },
             stdin = true,
         },
     },
 }
+
+require('hare-conf').fn.set_buffer_config({ 'go' }, {
+    ruler = {
+        columns = { 80 },
+    },
+})

@@ -9,11 +9,11 @@ return {
             'saghen/blink.cmp',
         },
         opts = {
-            experimental = { check_rtp = false },
             preview = {
+                enable = false,
                 filetypes = { 'markdown', 'md' },
             },
         },
-        config = function() end,
+        config = true,
     },
 }
