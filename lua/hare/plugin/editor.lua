@@ -10,6 +10,8 @@ return {
     {
         'saghen/blink.cmp',
         dependencies = { 'rafamadriz/friendly-snippets' },
+        version = '1.*',
+        build = 'cargo +nightly build --release',
         opts = {
             keymap = {
                 preset = 'default',
@@ -17,7 +19,7 @@ return {
                 ['<Down>'] = { 'select_next', 'fallback' },
                 ['<CR>'] = { 'accept', 'fallback' },
             },
-            fuzzy = { implementation = 'prefer_rust_with_warning' },
+            fuzzy = { implementation = 'prefer_rust' },
             sources = {
                 default = { 'lsp', 'path', 'lazydev' },
                 providers = {
