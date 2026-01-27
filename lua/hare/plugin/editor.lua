@@ -1,4 +1,14 @@
 return {
+    -- [https://github.com/nvim-mini/mini.icons]
+    {
+        'nvim-mini/mini.icons',
+    },
+
+    -- [https://github.com/onsails/lspkind.nvim]
+    {
+        'onsails/lspkind.nvim',
+    },
+
     -- This plugin is a modern autocompletion engine for Neovim. It provides a fast, minimal, and
     -- predictable code completion. More specifically, it shows completion suggestions as you type,
     -- inserts and confirms completion intelligently, and integrates with LSP, snippets, paths,
@@ -9,10 +19,44 @@ return {
     -- [https://github.com/saghen/blink.cmp]
     {
         'saghen/blink.cmp',
-        dependencies = { 'rafamadriz/friendly-snippets' },
+        dependencies = { 'rafamadriz/friendly-snippets', 'nvim-mini/mini.icons' },
         version = '1.*',
         build = 'cargo +nightly build --release',
         opts = {
+            completion = {
+                menu = {
+                    auto_show = true,
+                    draw = {
+                        columns = {
+                            { 'kind_icon', 'label', 'label_description', gap = 1 },
+                            { 'kind' },
+                        },
+                        components = {
+                            kind_icon = {
+                                ellipsis = false,
+                                text = function(ctx)
+                                    return require('lspkind').symbol_map[ctx.kind] or ''
+                                end,
+                                highlight = function(ctx)
+                                    local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
+                                    return hl
+                                end,
+                            },
+                            kind = {
+                                highlight = function(ctx)
+                                    local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
+                                    return hl
+                                end,
+                            },
+                        },
+                    },
+                },
+                documentation = {
+                    window = { border = 'single' },
+                    auto_show = true,
+                    auto_show_delay_ms = 100,
+                },
+            },
             keymap = {
                 preset = 'default',
                 ['<Up>'] = { 'select_prev', 'fallback' },

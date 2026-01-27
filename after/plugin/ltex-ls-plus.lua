@@ -18,7 +18,7 @@ vim.lsp.config('ltex-ls-plus', {
                 'latex',
             },
             completionEnabled = true,
-            checkFrequency = 'edit',
+            checkFrequency = 'save',
             disabledRules = {
                 ['en-US'] = { 'MORFOLOGIK_RULE_EN_US' },
             },

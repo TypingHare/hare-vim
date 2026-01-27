@@ -25,3 +25,9 @@ hare.builtin.editor.install_mason_packages()
 hare.builtin.editor.enable_lsp()
 -- Apply formatters for the languages enabled in the Hare configuration.
 hare.builtin.editor.apply_formatters()
+
+hare.config.editor.filetype['javascript'].ruler.columns = { 80 }
+hare.config.editor.filetype['typescript'].ruler.columns = { 80 }
+hare.config.editor.filetype['typescriptreact'].ruler.columns = { 80 }
+
+hare.fn.clear_buffer_config_cache()
