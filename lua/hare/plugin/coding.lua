@@ -3,7 +3,6 @@ return {
     --
     -- [https://github.com/github/copilot.vim]
     {
-
         'github/copilot.vim',
         event = 'InsertEnter',
     },
@@ -24,5 +23,11 @@ return {
         'nvim-pack/nvim-spectre',
         dependencies = { 'nvim-lua/plenary.nvim' },
         cmd = 'Spectre',
+    },
+
+    -- [https://github.com/mfussenegger/nvim-lint]
+    {
+        'mfussenegger/nvim-lint',
+        event = { 'BufReadPost', 'BufNewFile' },
     },
 }
