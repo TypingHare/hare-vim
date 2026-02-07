@@ -13,6 +13,10 @@ smartcolumn.setup {
             return DEFAULT_WIDTH
         end
 
+        if vim.bo.filetype == '' or vim.bo.filetype == 'conf' then
+            return MAX_WIDTH
+        end
+
         local ruler_columns = hare.fn.get_ruler_columns(vim.bo.filetype, vim.bo.buftype)
         if not ruler_columns then
             return MAX_WIDTH
