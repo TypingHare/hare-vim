@@ -22,7 +22,8 @@ vim.lsp.config('ltex-ls-plus', {
             disabledRules = {
                 ['en-US'] = {
                     'MORFOLOGIK_RULE_EN_US',
-                    "ENGLISH_WORD_REPEAT_BEGINNING_RULE",
+                    'ENGLISH_WORD_REPEAT_BEGINNING_RULE',
+                },
             },
         },
     },
