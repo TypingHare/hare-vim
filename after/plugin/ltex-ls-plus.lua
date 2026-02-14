@@ -20,7 +20,9 @@ vim.lsp.config('ltex-ls-plus', {
             completionEnabled = true,
             checkFrequency = 'save',
             disabledRules = {
-                ['en-US'] = { 'MORFOLOGIK_RULE_EN_US' },
+                ['en-US'] = {
+                    'MORFOLOGIK_RULE_EN_US',
+                    "ENGLISH_WORD_REPEAT_BEGINNING_RULE",
             },
         },
     },
