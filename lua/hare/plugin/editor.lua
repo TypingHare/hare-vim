@@ -255,4 +255,19 @@ return {
     {
         'j-hui/fidget.nvim',
     },
+
+    {
+        'FabijanZulj/blame.nvim',
+        lazy = false,
+        config = function()
+            require('blame').setup {
+                date_format = '%d.%m.%Y',
+                virtual_style = 'right_align',
+                relative_date_if_recent = true,
+            }
+        end,
+        opts = {
+            blame_options = { '-w' },
+        },
+    },
 }

@@ -23,6 +23,9 @@ vim.lsp.config('ltex-ls-plus', {
                 ['en-US'] = {
                     'MORFOLOGIK_RULE_EN_US',
                     'ENGLISH_WORD_REPEAT_BEGINNING_RULE',
+                    'NUMBERS_IN_WORDS',
+                    'UPPERCASE_SENTENCE_START',
+                    'WHITESPACE_RULE',
                 },
             },
         },
