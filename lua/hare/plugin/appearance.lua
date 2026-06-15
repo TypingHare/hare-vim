@@ -141,4 +141,66 @@ return {
             },
         },
     },
+
+    -- This plugin is a keybinding discovery and help plugin for Neovim. It
+    -- shows a popup of available keybindings as you start typing a key
+    -- sequence, making complex mappings discoverable and self-documenting.
+    --
+    -- [https://github.com/folke/which-key.nvim]
+    {
+
+        'folke/which-key.nvim',
+        event = 'VeryLazy',
+        init = function()
+            vim.opt.timeout = true
+            vim.opt.timeoutlen = 100
+        end,
+        config = function()
+            local which_key = require 'which-key'
+            which_key.setup {
+                preset = 'helix',
+                delay = 0,
+                sort = { 'alphanum' },
+                icons = {
+                    rules = false,
+                },
+            }
+
+            which_key.add {
+                { '<leader>e', group = 'Editor' },
+                { '<leader>f', group = 'Find' },
+                { '<leader>r', group = 'Run' },
+                { '<leader>b', group = 'Buffer' },
+                { '<leader>m', group = 'Neovim Modules' },
+                { '<leader>g', group = 'Git' },
+                { '<leader>c', group = 'Coding' },
+                { '<leader>t', group = 'Terminal' },
+                { '<leader>q', group = 'Quit' },
+                { '<leader>cc', group = 'Copilot' },
+            }
+        end,
+    },
+
+    -- This plugin briefly highlights text after you yank (copy) it in Neovim.
+    --
+    -- [https://github.com/machakann/vim-highlightedyank]
+    {
+        'machakann/vim-highlightedyank',
+        event = 'TextYankPost',
+        config = function()
+            vim.g.highlightedyank_highlight_duration = 128
+        end,
+    },
+
+    -- This plugin provides automatic line wrapping for Neovim.
+    --
+    -- [https://github.com/andrewferrier/wrapping.nvim]
+    {
+        'andrewferrier/wrapping.nvim',
+        opts = {
+            auto_set_mode_heuristically = true,
+            notify_on_switch = false,
+        },
+        config = true,
+    },
 }
