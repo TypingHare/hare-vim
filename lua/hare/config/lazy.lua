@@ -24,5 +24,6 @@ vim.opt.rtp:prepend(lazy_path)
 require('lazy').setup {
     spec = {
         { import = 'hare.plugin' },
+        { import = 'hare.plugin.lang' },
     },
 }
