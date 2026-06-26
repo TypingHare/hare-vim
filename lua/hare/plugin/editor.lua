@@ -182,6 +182,17 @@ return {
     -- [https://github.com/HiPhish/rainbow-delimiters.nvim]
     {
         'HiPhish/rainbow-delimiters.nvim',
+        config = function()
+            require('rainbow-delimiters.setup').setup {
+                condition = function(bufnr)
+                    if vim.bo[bufnr].buftype ~= '' then
+                        return false
+                    end
+
+                    return pcall(vim.treesitter.get_parser, bufnr)
+                end,
+            }
+        end,
     },
 
     -- This plugin shows a colorcolumn (ruler) only when it’s needed, instead of having it always

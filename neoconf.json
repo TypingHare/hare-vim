@@ -7,6 +7,15 @@
         "dark": "bamboo"
       }
     },
+    "editor": {
+      "filetype": {
+        "lua": {
+          "ruler": {
+            "columns": [80]
+          }
+        }
+      }
+    },
     "language": {
       "names": [
         "lua",
@@ -30,7 +39,8 @@
         "yaml",
         "kotlin",
         "go",
-        "latex"
+        "latex",
+        "xml"
       ]
     }
   }

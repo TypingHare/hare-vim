@@ -6,6 +6,19 @@ end
 -- Load builtin language support (use `Hareconf lang` to check all supported languages).
 -- You can also add your own language support using `hare.fn.set_language_config`.
 hare.builtin.language.setup()
+
+hare.fn.set_language_config {
+    xml = {
+        filetypes = { 'xml' },
+        buffer_config = {
+            lsp = { name = 'lemminx' },
+            formatter = { name = 'prettier' },
+            ruler = { enabled = true, columns = { 100 } },
+            indent = { width = 4 },
+        },
+    },
+}
+
 -- Enable languages specified in Hare configuration
 -- Add language names in neoconf.json `HareConf -> language -> names`
 hare.fn.enable_languages_in_config()
@@ -29,5 +42,6 @@ hare.builtin.editor.apply_formatters()
 hare.config.editor.filetype['javascript'].ruler.columns = { 80 }
 hare.config.editor.filetype['typescript'].ruler.columns = { 80 }
 hare.config.editor.filetype['typescriptreact'].ruler.columns = { 80 }
+hare.config.editor.filetype['lua'].ruler.columns = { 80 }
 
 hare.fn.clear_buffer_config_cache()
