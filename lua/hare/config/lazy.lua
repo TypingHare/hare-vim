@@ -1,7 +1,7 @@
 -- This script checks if lazy.nvim is installed. If it is not installed, clone
 -- the remote repository from GitHub and save it to `~/.local/share/nvim/lazy/`.
 
--- Path to the lazy.nvim package (`~/.local/share/nvim/lazy/lazy.nvim`).
+-- Path to the lazy.nvim package (i.e., `~/.local/share/nvim/lazy/lazy.nvim`).
 local lazy_path = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 
 -- Clone the repository if the package doesn't exist.
