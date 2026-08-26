@@ -1,0 +1,54 @@
+---@class hare.buffer
+---@field indent? hare.buffer.indent
+---@field ruler? hare.buffer.ruler
+---@field treesitter? hare.buffer.treesitter
+---@field lsp? hare.buffer.lsp
+---@field linter? hare.buffer.linter
+---@field formatter? hare.buffer.formatter
+---@field debugger? hare.buffer.debugger
+---@field format_on_save? boolean
+---
+---@class hare.buffer.indent
+---@field enabled? boolean
+---@field type? 'space' | 'tab'
+---@field width? integer
+---@field display_width? integer
+---@field shift_width? integer
+---
+---@class hare.buffer.ruler
+---@field enabled? boolean
+---@field columns? integer[]
+---@field highlight? table<string, any>
+---
+---@class hare.buffer.treesitter
+---@field enabled? boolean
+---@field names? string[]
+---@field highlight_enabled? boolean
+---
+---@class hare.buffer._.mason_package
+---@field package_name string
+---@field executable string
+---
+---@class hare.buffer.lsp
+---@field enabled? boolean
+---@field name? string
+---@field packages? hare.buffer._.mason_package[]
+---
+---@class hare.buffer.linter
+---@field enabled? boolean
+---@field name? string
+---@field packages? hare.buffer._.mason_package[]
+---
+---@class hare.buffer.formatter
+---@field enabled? boolean
+---@field name? string
+---@field packages? hare.buffer._.mason_package[]
+---
+---@class hare.buffer.debugger
+---@field enabled? boolean
+---@field name? string
+---@field packages? hare.buffer._.mason_package[]
+---
+---@class hare.lang
+---@field filetypes string[]
+---@field buffer_config hare.buffer

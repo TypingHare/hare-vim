@@ -94,8 +94,8 @@ local M = {
         treesitter = {
             -- Whether to enable tree-sitter.
             enabled = true,
-            -- The tree-sitter parser to use.
-            name = {},
+            -- The tree-sitter parsers to use.
+            names = {},
             -- Whether to enable tree-sitter highlight.
             highlight_enabled = true,
         },
@@ -160,7 +160,7 @@ local M = {
             -- The name of the clipboard integration tool.
             name = 'HareVim Clipboard Integration',
             -- The host address for clipboard integration.
-            host = 'xclip',
+            host = '',
             -- Whether to enable clipboard caching.
             enabled_cache = true,
             -- The clipboard option to use.

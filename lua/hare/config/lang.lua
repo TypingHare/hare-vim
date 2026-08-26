@@ -1,34 +1,16 @@
----@class hare.buffer
----@field indent? hare.buffer.indent
----@field ruler? hare.buffer.ruler
----@field treesitter? table<string, any>
----@field lsp? table<string, any>
----@field linter? table<string, any>
----@field formatter? table<string, any>
----@field debugger? table<string, any>
----@field format_on_save? boolean
----
----@class hare.buffer.indent
----@field enabled? boolean
----@field width? number
----@field display_width? number
----@field shift_width? number
----
----@class hare.buffer.ruler
----@field enabled? boolean
----@field columns? number[]
----@field highlight? table<string, any>
-
----@class hare.lang
----@field filetypes string[]
----@field buffer_config hare.buffer
-
+-- This module returns a table of language configurations. For each entry in
+-- this table, the key is a string representing the language name, and the value
+-- is a table containing two fields: `filetypes` and `buffer_config`. The
+-- `filetypes` field is a list of strings representing the filetypes associated
+-- with the language, and the `buffer_config` field is a table containing
+-- configuration options for the buffer.
+--
 --- @type table<string, hare.lang>
 local M = {
     lua = {
         filetypes = { 'lua' },
         buffer_config = {
-            treesitter = { name = 'lua' },
+            treesitter = { names = { 'lua' } },
             lsp = { name = 'lua_ls' },
             formatter = { name = 'stylua' },
         },
@@ -36,7 +18,7 @@ local M = {
     json = {
         filetypes = { 'json', 'jsonc' },
         buffer_config = {
-            treesitter = { name = 'json' },
+            treesitter = { names = { 'json' } },
             lsp = { name = 'jsonls' },
             formatter = { name = 'prettier' },
             indent = { width = 2 },
@@ -46,7 +28,7 @@ local M = {
     toml = {
         filetypes = { 'toml' },
         buffer_config = {
-            treesitter = { name = 'toml' },
+            treesitter = { names = { 'toml' } },
             lsp = { name = 'taplo' },
             formatter = { name = 'taplo' },
             ruler = { enabled = false },
@@ -55,7 +37,7 @@ local M = {
     yaml = {
         filetypes = { 'yaml' },
         buffer_config = {
-            treesitter = { name = 'yaml' },
+            treesitter = { names = { 'yaml' } },
             lsp = { name = 'yamlls' },
             formatter = { name = 'prettier' },
             linter = { name = 'yamllint' },
@@ -65,7 +47,7 @@ local M = {
     bash = {
         filetypes = { 'sh', 'zsh' },
         buffer_config = {
-            treesitter = { name = 'bash' },
+            treesitter = { names = { 'bash' } },
             lsp = { name = 'bashls' },
             linter = { name = 'shellcheck' },
             formatter = { name = 'shfmt' },
@@ -74,7 +56,7 @@ local M = {
     go = {
         filetypes = { 'go' },
         buffer_config = {
-            treesitter = { name = 'go' },
+            treesitter = { names = { 'go' } },
             lsp = { name = 'gopls' },
             linter = { name = 'golangci-lint' },
             formatter = { name = 'gofumpt' },
@@ -83,7 +65,7 @@ local M = {
     latex = {
         filetypes = { 'tex', 'bib' },
         buffer_config = {
-            treesitter = { name = 'bibtex', highlight_enabled = false },
+            treesitter = { names = { 'bibtex' }, highlight_enabled = false },
             lsp = { name = 'texlab' },
             formatter = { name = 'latexindent' },
             ruler = { enabled = false },
