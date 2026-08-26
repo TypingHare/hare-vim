@@ -39,32 +39,6 @@ local function get_buffer_conf(ft)
     return lang_buffer_confs_by_ft[ft] or default_buffer_conf
 end
 
--- Collect filetypes that enables treesitter highlighting.
----@type string[]
-local enabled_highlight_filetypes = {}
-for ft, buffer_conf in pairs(lang_buffer_confs_by_ft) do
-    if
-        buffer_conf.treesitter.enabled
-        and buffer_conf.treesitter.highlight_enabled
-    then
-        table.insert(enabled_highlight_filetypes, ft)
-    end
-end
-
--- Set up an autocommand for filetypes that have treesitter highlighting
--- enabled.
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = enabled_highlight_filetypes,
-    callback = function(args)
-        local bufnr = args.buf
-        if vim.bo[bufnr].buftype == 'nofile' then
-            return
-        end
-
-        vim.treesitter.start()
-    end,
-})
-
 -- Install required Tree-sitter parsers based on buffer configuration.
 local ok_parsers, parsers = pcall(require, 'nvim-treesitter.parsers')
 local ok_config, config = pcall(require, 'nvim-treesitter.config')
@@ -106,6 +80,49 @@ else
         vim.log.levels.WARN
     )
 end
+
+-- Collect filetypes that enables treesitter highlighting.
+---@type string[]
+local enabled_highlight_filetypes = {}
+for ft, buffer_conf in pairs(lang_buffer_confs_by_ft) do
+    if
+        buffer_conf.treesitter.enabled
+        and buffer_conf.treesitter.highlight_enabled
+    then
+        table.insert(enabled_highlight_filetypes, ft)
+    end
+end
+
+-- Set up an autocommand for filetypes that have treesitter highlighting
+-- enabled.
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = enabled_highlight_filetypes,
+    callback = function(args)
+        local bufnr = args.buf
+        local ft = vim.bo[bufnr].filetype
+        local buffer_conf = get_buffer_conf(ft)
+        local parser_names = buffer_conf.treesitter.names
+
+        if parser_names then
+            for _, parser_name in ipairs(parser_names) do
+                local exists = pcall(vim.treesitter.language.add, parser_name)
+                if exists then
+                    vim.treesitter.start(bufnr, parser_name)
+                else
+                    vim.notify(
+                        string.format(
+                            'Tree-sitter parser "%s" not installed for '
+                                .. 'filetype "%s"',
+                            parser_name,
+                            ft
+                        ),
+                        vim.log.levels.WARN
+                    )
+                end
+            end
+        end
+    end,
+})
 
 -- Set up an autocommand to configure indentation-related buffer settings based
 -- on the filetype.
