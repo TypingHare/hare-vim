@@ -51,7 +51,7 @@ return {
             local opts = {
                 completion = { menu = { draw = { columns = {} } } },
             }
-            opts.completion.menu.draw.auto_show = true
+            opts.completion.menu.auto_show = true
             opts.completion.menu.draw.columns = {
 
                 {
