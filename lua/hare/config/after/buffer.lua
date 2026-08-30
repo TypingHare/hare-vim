@@ -401,9 +401,10 @@ if ok_mason_registry and ok_mappings then
         end
     end
 else
-    vim.warn(
+    vim.notify(
         'Plugin "mason-registry" or "mason-lspconfig" not installed; skipping '
-            .. 'mason package installation.'
+            .. 'mason package installation.',
+        vim.log.levels.WARN
     )
 end
 

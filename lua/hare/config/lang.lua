@@ -202,16 +202,7 @@ local M = {
             lsp = { name = 'systemd_lsp' },
             linter = { name = 'systemdlint' },
         },
-    },
-    typos = {
-        filetypes = { '*typos' },
-        buffer_config = {
-            lsp = { name = 'typos_lsp' },
-            linter = { enabled = false },
-            formatter = { enabled = false },
-            debug = { enabled = false },
-        },
-    },
+    }
 }
 
 return M
