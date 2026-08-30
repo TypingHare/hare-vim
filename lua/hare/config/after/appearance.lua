@@ -16,7 +16,17 @@ utils.set_hl('CursorVisual', conf.appearance.cursor.visual_highlight)
 utils.set_hl('CursorCommand', conf.appearance.cursor.command_highlight)
 utils.set_hl('CursorTerminal', conf.appearance.cursor.terminal_highlight)
 
--- Set the highlight for cursor line.
-if conf.appearance.cursor then
-    vim.api.nvim_set_hl(0, 'CursorLine', conf.appearance.cursor_line.highlight)
+-- Enable and set cursor line highlight if the configuration enables it. The
+-- cursor line refers to the line where the cursor is currently located. This
+-- only applies to normal and insert modes.
+local cursor_line_enabled = conf.appearance.cursor_line.enabled
+if cursor_line_enabled then
+    vim.opt.cursorline = cursor_line_enabled
+    if conf.appearance.cursor then
+        vim.api.nvim_set_hl(
+            0,
+            'CursorLine',
+            conf.appearance.cursor_line.highlight
+        )
+    end
 end

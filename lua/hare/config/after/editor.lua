@@ -6,15 +6,18 @@ local utils = require 'hare.utils'
 local sign_column = conf.editor.sign_column
 vim.opt.signcolumn = sign_column.enabled and 'yes' or 'no'
 
--- Set the number column, which controls the display of line numbers.
+-- Set the number column, which controls the display of line numbers. If
+-- `relative` is set to true, the number for the cursor line (the line where the
+-- cursor is located) is the absolute line number in the file, and the line
+-- numbers before and after increment from 1, respectively.
 local number_column = conf.editor.number_column
-vim.opt.cursorline = number_column.enabled
 vim.opt.number = number_column.enabled
 vim.opt.relativenumber = number_column.relative
 utils.set_hl('LineNr', number_column.highlight)
 utils.set_hl('CursorLineNr', number_column.cursor_highlight)
 
--- Set the status column if enabled.
+-- Set the status column if enabled. HareVim constructs the status column string
+-- based on the sign column and number column settings.
 if conf.editor.status_column.enabled then
     local status_column_str = ''
     if sign_column.enabled then
@@ -65,7 +68,7 @@ else
 end
 
 -- Set the fill characters for the editor, which control the appearance of empty
--- lines and other UI elements.
+-- lines and other UI elements. The default value in Neovim is `~`.
 local fill_chars = conf.editor.general.fill_chars
 vim.opt.fillchars:append { eob = fill_chars }
 
