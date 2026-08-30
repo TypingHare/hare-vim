@@ -42,11 +42,6 @@ return {
     {
         'stevearc/conform.nvim',
         dependencies = { 'mason-org/mason.nvim' },
-        opts = {
-            format_on_save = {
-                timeout_ms = 5000,
-            },
-        },
     },
 
     -- This plugin is a tool that installs Mason packages.

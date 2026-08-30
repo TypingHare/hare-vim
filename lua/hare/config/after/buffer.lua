@@ -422,7 +422,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
         local buffer_conf = M.get_buffer_conf(ft)
 
         if buffer_conf.format_on_save then
-            conform.format { bufnr = bufnr }
+            conform.format { bufnr = bufnr, timeout_ms = 5000 }
         end
     end,
 })
@@ -461,24 +461,24 @@ if ok then
         --- @type hare.buffer.formatter
         local formatter = buffer_conf.formatter
         if formatter.enabled then
+            ---@type string[]
+            local formatters = {}
             -- Resolve the 'name' field.
             if formatter.name and formatter.name ~= '' then
-                formatters_by_ft[ft] = { formatter.name }
+                table.insert(formatters, formatter.name)
             end
 
             -- Resolve the 'packages' field; support multiple formatters for a
             -- single filetype.
             if formatter.packages and vim.islist(formatter.packages) then
-                ---@type string[]
-                local formatters = {}
                 for _, package_entry in pairs(formatter.packages) do
                     local executable = package_entry.executable
                     if executable and executable ~= '' then
                         table.insert(formatters, executable)
                     end
                 end
-                formatters_by_ft[ft] = formatters
             end
+            formatters_by_ft[ft] = formatters
         end
     end
 
