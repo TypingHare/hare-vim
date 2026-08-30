@@ -133,15 +133,27 @@ local M = {
         filetypes = {
             'javascript',
             'javascriptreact',
+        },
+        buffer_config = {
+            treesitter = {
+                names = {
+                    'javascript',
+                },
+            },
+            lsp = { name = 'ts_ls' },
+            formatter = { name = 'prettier' },
+            linter = { name = 'eslint-lsp' },
+        },
+    },
+    typescript = {
+        filetypes = {
             'typescript',
             'typescriptreact',
         },
         buffer_config = {
             treesitter = {
                 names = {
-                    'javascript',
                     'typescript',
-                    'jsx',
                     'tsx',
                 },
             },
@@ -202,7 +214,7 @@ local M = {
             lsp = { name = 'systemd_lsp' },
             linter = { name = 'systemdlint' },
         },
-    }
+    },
 }
 
 return M
