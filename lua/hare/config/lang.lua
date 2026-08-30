@@ -53,13 +53,37 @@ local M = {
             formatter = { name = 'shfmt' },
         },
     },
-    go = {
-        filetypes = { 'go' },
+    make = {
+        filetypes = { 'make' },
         buffer_config = {
-            treesitter = { names = { 'go' } },
-            lsp = { name = 'gopls' },
-            linter = { name = 'golangci-lint' },
-            formatter = { name = 'gofumpt' },
+            treesitter = { names = { 'make' } },
+            lsp = { name = 'mbake' },
+            linter = { name = 'checkmake' },
+            formatter = {
+                packages = {
+                    { package_name = 'mbake', executable = 'bake' },
+                },
+            },
+            indent = { type = 'tab', display_width = 4 },
+        },
+    },
+    cmake = {
+        filetypes = { 'cmake' },
+        buffer_config = {
+            treesitter = { names = { 'cmake' } },
+            lsp = { name = 'cmake' },
+            linter = { name = 'cmakelint' },
+            ruler = { columns = { 80 } },
+        },
+    },
+    markdown = {
+        filetypes = { 'markdown' },
+        buffer_config = {
+            ruler = { enabled = false },
+            treesitter = { names = { 'markdown' } },
+            lsp = {},
+            linter = {},
+            formatter = {},
         },
     },
     latex = {
@@ -69,6 +93,123 @@ local M = {
             lsp = { name = 'texlab' },
             formatter = { name = 'latexindent' },
             ruler = { enabled = false },
+        },
+    },
+    go = {
+        filetypes = { 'go' },
+        buffer_config = {
+            treesitter = { names = { 'go' } },
+            lsp = { name = 'gopls' },
+            linter = { name = 'golangci-lint' },
+            formatter = { name = 'gofumpt' },
+        },
+    },
+    python = {
+        filetypes = { 'python' },
+        buffer_config = {
+            treesitter = { names = { 'python' } },
+            lsp = { name = 'pyright' },
+        },
+    },
+    java = {
+        filetypes = { 'java' },
+        buffer_config = {
+            treesitter = { names = { 'java' } },
+            lsp = { name = 'jdtls' },
+            formatter = { name = 'google-java-format' },
+        },
+    },
+    kotlin = {
+        filetypes = { 'kotlin', 'kt', 'kts' },
+        buffer_config = {
+            treesitter = { names = { 'kotlin' } },
+            lsp = { name = 'kotlin_language_server' },
+            linter = { name = 'ktlint' },
+            formatter = { name = 'ktlint' },
+            ruler = { columns = { 100 } },
+        },
+    },
+    javascript = {
+        filetypes = {
+            'javascript',
+            'javascriptreact',
+            'typescript',
+            'typescriptreact',
+        },
+        buffer_config = {
+            treesitter = {
+                names = {
+                    'javascript',
+                    'typescript',
+                    'jsx',
+                    'tsx',
+                },
+            },
+            lsp = { name = 'ts_ls' },
+            formatter = { name = 'prettier' },
+            linter = { name = 'eslint-lsp' },
+        },
+    },
+    css = {
+        filetypes = { 'css', 'scss', 'less' },
+        buffer_config = {
+            treesitter = { names = { 'css' } },
+            lsp = { name = 'cssls' },
+            formatter = { name = 'prettier' },
+            indent = { width = 2 },
+        },
+    },
+    html = {
+        filetypes = { 'html' },
+        buffer_config = {
+            treesitter = { names = { 'html' } },
+            lsp = { name = 'html' },
+            formatter = { name = 'prettier' },
+            indent = { width = 2 },
+        },
+    },
+    cpp = {
+        filetypes = { 'c', 'cpp', 'h', 'hpp' },
+        buffer_config = {
+            treesitter = { names = { 'cpp' } },
+            formatter = { name = 'clang-format' },
+            lsp = { name = 'clangd' },
+            ruler = { columns = { 80 } },
+        },
+    },
+    sql = {
+        filetypes = { 'sql' },
+        buffer_config = {
+            treesitter = { names = { 'sql' } },
+            lsp = { name = 'sqls' },
+            formatter = { name = 'sqruff' },
+        },
+    },
+    svelte = {
+        filetypes = { 'svelte' },
+        buffer_config = {
+            treesitter = { names = { 'svelte' } },
+            lsp = { name = 'svelte' },
+            formatter = { name = 'prettier' },
+            indent = { width = 2 },
+        },
+    },
+    systemd = {
+        filetypes = { 'systemd' },
+        buffer_config = {
+            ruler = { enabled = false },
+            treesitter = { enabled = false },
+            lsp = { name = 'systemd_lsp' },
+            linter = { name = 'systemdlint' },
+        },
+    },
+    typos = {
+        filetypes = { '*typos' },
+        buffer_config = {
+            lsp = { name = 'typos_lsp' },
+            linter = { enabled = false },
+            formatter = { enabled = false },
+            debug = { enabled = false },
         },
     },
 }

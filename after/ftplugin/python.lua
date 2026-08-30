@@ -36,4 +36,4 @@ end
 
 local ruff_line_length = get_ruff_line_length()
 local lang = require 'hare.config.lang'
-lang['go'].buffer_config.ruler = { columns = { ruff_line_length or 80 } }
+lang['python'].buffer_config.ruler = { columns = { ruff_line_length or 80 } }

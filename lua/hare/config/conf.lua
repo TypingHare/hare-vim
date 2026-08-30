@@ -70,16 +70,16 @@ local M = {
     },
     buffer = {
         indent = {
-            -- The character used for indentation. Either 'spaces' or 'tabs'.
-            type = 'spaces',
+            -- The character used for indentation. Either 'space' or 'tab'.
+            type = 'space',
             -- The number of spaces per tab. This is only applied when 'type' is
-            -- set to 'spaces'.
+            -- set to 'space'.
             width = 4,
             -- The number of spaces to use for each step of indent. This is only
-            -- applied when 'type' is set to 'tabs'.
+            -- applied when 'type' is set to 'tab'.
             display_width = 4,
             -- The number of spaces to use for each step of indent. This is only
-            -- applied when 'type' is set to 'tabs'. In most cases, this should
+            -- applied when 'type' is set to 'tab'. In most cases, this should
             -- be the same as 'width'.
             shift_width = 4,
         },

@@ -2,13 +2,142 @@ local conf = require 'hare.config.conf'
 local lang = require 'hare.config.lang'
 local utils = require 'hare.utils'
 
---- @types string[]
-local enabled_langs = { 'lua', 'json', 'toml', 'yaml', 'bash', 'go' }
+local M = {}
+local enabled_langs_path =
+    vim.fs.joinpath(vim.fn.stdpath 'state', 'hare', 'enabled_langs')
+
+-- Loads the list of enabled languages from the file
+-- `~/.local/state/<app-name>/hare/enabled_langs`. Each line in the file
+-- represents a language name. Lines that are empty or start with `#` are
+-- ignored. If the file does not exist or cannot be read, an empty list is
+-- returned.
+--
+--- @return string[] - A list of enabled languages.
+local function load_enabled_langs()
+    if not vim.uv.fs_stat(enabled_langs_path) then
+        return {}
+    end
+
+    local ok, lines = pcall(vim.fn.readfile, enabled_langs_path)
+    if not ok then
+        vim.notify(
+            'Could not read enabled languages: ' .. enabled_langs_path,
+            vim.log.levels.WARN
+        )
+        return {}
+    end
+
+    local enabled_langs = {}
+    local seen = {}
+
+    for _, line in ipairs(lines) do
+        local name = vim.trim(line)
+        if name ~= '' and not vim.startswith(name, '#') and not seen[name] then
+            table.insert(enabled_langs, name)
+            seen[name] = true
+        end
+    end
+
+    return enabled_langs
+end
+
+local enabled_langs = load_enabled_langs()
+
+--- Saves enabled language names to the state file. Creates the parent
+--- directory when it does not exist.
+---
+--- @param langs string[] - A list of enabled language names to save.
+--- @return boolean - Whether the language list was saved successfully.
+local function save_enabled_langs(langs)
+    local directory = vim.fs.dirname(enabled_langs_path)
+    local ok_mkdir = pcall(vim.fn.mkdir, directory, 'p')
+    if not ok_mkdir then
+        vim.notify(
+            'Could not create enabled languages directory: ' .. directory,
+            vim.log.levels.ERROR
+        )
+        return false
+    end
+
+    local ok_write, result = pcall(vim.fn.writefile, langs, enabled_langs_path)
+    if not ok_write or result ~= 0 then
+        vim.notify(
+            'Could not write enabled languages: ' .. enabled_langs_path,
+            vim.log.levels.ERROR
+        )
+        return false
+    end
+
+    return true
+end
+
+-- Create a user command `LangEnable <lang>` to enable a supported language. A
+-- supported language is one that presents as a key in the `lang` table.
+vim.api.nvim_create_user_command('LangEnable', function(args)
+    local lang_name = vim.trim(args.args)
+    if not lang[lang_name] then
+        vim.notify(
+            string.format('Language "%s" is not supported', lang_name),
+            vim.log.levels.ERROR
+        )
+        return
+    end
+
+    local langs = load_enabled_langs()
+    if vim.tbl_contains(langs, lang_name) then
+        vim.notify(string.format('Language "%s" is already enabled', lang_name))
+        return
+    end
+
+    table.insert(langs, lang_name)
+    if save_enabled_langs(langs) then
+        vim.notify(
+            string.format(
+                'Enabled language "%s"; restart Neovim to apply',
+                lang_name
+            )
+        )
+    end
+end, {
+    nargs = 1,
+    force = true,
+    complete = function()
+        return vim.tbl_keys(lang)
+    end,
+})
+
+-- Create a user command `LangDisable <lang>` to disable an enabled language. An
+-- enabled language is one that is present in the `enabled_langs` list.
+vim.api.nvim_create_user_command('LangDisable', function(args)
+    local lang_name = vim.trim(args.args)
+    local langs = load_enabled_langs()
+    local index = vim.tbl_indexof(langs, lang_name)
+    if index == -1 then
+        vim.notify(string.format('Language "%s" is not enabled', lang_name))
+        return
+    end
+
+    table.remove(langs, index)
+    if save_enabled_langs(langs) then
+        vim.notify(
+            string.format(
+                'Disabled language "%s"; restart Neovim to apply',
+                lang_name
+            )
+        )
+    end
+end, {
+    nargs = 1,
+    force = true,
+    complete = function()
+        return load_enabled_langs()
+    end,
+})
 
 -- Get the default buffer configuration from the main configuration.
 local default_buffer_conf = conf.buffer
 
--- Creates a table mapping filetypes to their corresponding language-specific
+-- A table mapping filetypes to their corresponding partial language-specific
 -- buffer configurations.
 --- @type table<string, hare.buffer>
 local lang_buffer_confs_by_ft = {}
@@ -21,10 +150,7 @@ for _, lang_name in ipairs(enabled_langs) do
         )
     else
         for _, ft in ipairs(lang_conf.filetypes) do
-            lang_buffer_confs_by_ft[ft] = utils.merge_buffer_conf(
-                default_buffer_conf,
-                lang_conf.buffer_config
-            )
+            lang_buffer_confs_by_ft[ft] = lang_conf.buffer_config
         end
     end
 end
@@ -33,10 +159,45 @@ end
 -- configuration is found for the filetype, it returns the default buffer
 -- configuration.
 --
---- @param ft string
+--- @param ft string - Filetype of the buffer conf to retrieve.
 --- @return hare.buffer
-local function get_buffer_conf(ft)
-    return lang_buffer_confs_by_ft[ft] or default_buffer_conf
+function M.get_buffer_conf(ft)
+    local lang_conf = lang_buffer_confs_by_ft[ft]
+    if lang_conf == nil then
+        return default_buffer_conf
+    else
+        return utils.merge_buffer_conf(default_buffer_conf, lang_conf)
+    end
+end
+
+-- Update and deep-extend the buffer configuration for a specific filetype.
+--
+--- @param ft string - Filetype of the buffer conf to update.
+--- @param new_buffer_conf hare.buffer New buffer conf to merge to the old one.
+function M.update_buffer_conf(ft, new_buffer_conf)
+    local lang_conf = lang_buffer_confs_by_ft[ft]
+    if lang_conf == nil then
+        vim.notify(
+            string.format('Language configuration for %s not found', ft),
+            vim.log.levels.WARN
+        )
+        return
+    end
+
+    -- In-place deep extension.
+    for key, value in pairs(new_buffer_conf) do
+        local current_value = lang_conf[key] or {}
+        lang_conf[key] = vim.tbl_deep_extend('force', current_value, value)
+    end
+end
+
+-- A table mapping filetypes to their corresponding full language-specific
+-- buffer configuration.
+--- @type table<string, hare.buffer>
+local initial_buffer_confs_by_ft = {}
+for ft, lang_conf in pairs(lang_buffer_confs_by_ft) do
+    initial_buffer_confs_by_ft[ft] =
+        utils.merge_buffer_conf(default_buffer_conf, lang_conf)
 end
 
 -- Install required Tree-sitter parsers based on buffer configuration.
@@ -53,7 +214,7 @@ if ok_parsers and ok_config then
         end
     end
 
-    for _, buffer_config in pairs(lang_buffer_confs_by_ft) do
+    for _, buffer_config in pairs(initial_buffer_confs_by_ft) do
         local lang_parser_names = buffer_config.treesitter.names
         if lang_parser_names then
             for _, name in ipairs(lang_parser_names) do
@@ -84,7 +245,7 @@ end
 -- Collect filetypes that enables treesitter highlighting.
 ---@type string[]
 local enabled_highlight_filetypes = {}
-for ft, buffer_conf in pairs(lang_buffer_confs_by_ft) do
+for ft, buffer_conf in pairs(initial_buffer_confs_by_ft) do
     if
         buffer_conf.treesitter.enabled
         and buffer_conf.treesitter.highlight_enabled
@@ -100,7 +261,7 @@ vim.api.nvim_create_autocmd('FileType', {
     callback = function(args)
         local bufnr = args.buf
         local ft = vim.bo[bufnr].filetype
-        local buffer_conf = get_buffer_conf(ft)
+        local buffer_conf = M.get_buffer_conf(ft)
         local parser_names = buffer_conf.treesitter.names
 
         if parser_names then
@@ -131,7 +292,7 @@ vim.api.nvim_create_autocmd('FileType', {
     callback = function(args)
         local bufnr = args.buf
         local ft = vim.bo[bufnr].filetype
-        local buffer_conf = get_buffer_conf(ft)
+        local buffer_conf = M.get_buffer_conf(ft)
         vim.bo[bufnr].expandtab = buffer_conf.indent.type == 'space'
 
         --- @type number
@@ -184,7 +345,7 @@ if ok_mason_registry and ok_mappings then
 
     ---@type string[]
     local package_names = {}
-    for _, buffer_conf in pairs(lang_buffer_confs_by_ft) do
+    for _, buffer_conf in pairs(initial_buffer_confs_by_ft) do
         resolve_package_names(package_names, buffer_conf.lsp)
         resolve_package_names(package_names, buffer_conf.formatter)
         resolve_package_names(package_names, buffer_conf.linter)
@@ -257,7 +418,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 
         local bufnr = args.buf
         local ft = vim.bo[bufnr].filetype
-        local buffer_conf = get_buffer_conf(ft)
+        local buffer_conf = M.get_buffer_conf(ft)
 
         if buffer_conf.format_on_save then
             conform.format { bufnr = bufnr }
@@ -267,7 +428,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 
 -- Enable LSP servers for filetypes that have LSP enabled in their buffer
 -- configuration.
-for _, buffer_conf in pairs(lang_buffer_confs_by_ft) do
+for _, buffer_conf in pairs(initial_buffer_confs_by_ft) do
     --- @type hare.buffer.lsp
     local lsp = buffer_conf.lsp
     if lsp.enabled then
@@ -295,7 +456,7 @@ local ok, conform = pcall(require, 'conform')
 if ok then
     ---@type table<string, string[]>
     local formatters_by_ft = {}
-    for ft, buffer_conf in pairs(lang_buffer_confs_by_ft) do
+    for ft, buffer_conf in pairs(initial_buffer_confs_by_ft) do
         --- @type hare.buffer.formatter
         local formatter = buffer_conf.formatter
         if formatter.enabled then
@@ -327,3 +488,60 @@ else
         vim.log.levels.WARN
     )
 end
+
+local ok_lint, lint = pcall(require, 'lint')
+if ok_lint then
+    ---@type table<string, string[]>
+    local linters_by_ft = {}
+
+    for ft, buffer_conf in pairs(initial_buffer_confs_by_ft) do
+        --- @type hare.buffer.linter
+        local linter = buffer_conf.linter
+        if linter.enabled then
+            -- Resolve the 'name' field.
+            if linter.name and linter.name ~= '' then
+                linters_by_ft[ft] = { linter.name }
+            end
+
+            -- Resolve the 'packages' field; support multiple linters for a
+            -- single filetype.
+            if linter.packages and vim.islist(linter.packages) then
+                ---@type string[]
+                local linters = {}
+                for _, package_entry in pairs(linter.packages) do
+                    local executable = package_entry.executable
+                    if executable and executable ~= '' then
+                        table.insert(linters, executable)
+                    end
+                end
+                linters_by_ft[ft] = linters
+            end
+        end
+    end
+
+    lint.linters_by_ft = linters_by_ft
+
+    -- Create an autocommand group for linting events to avoid duplicate
+    -- autocmds.
+    local group = vim.api.nvim_create_augroup('nvim_lint', {
+        clear = true,
+    })
+
+    vim.api.nvim_create_autocmd({
+        'BufEnter',
+        'BufWritePost',
+        'InsertLeave',
+    }, {
+        group = group,
+        callback = function()
+            lint.try_lint()
+        end,
+    })
+else
+    vim.notify(
+        'Plugin "nvim-lint" not installed; skipping linter setup.',
+        vim.log.levels.WARN
+    )
+end
+
+return M

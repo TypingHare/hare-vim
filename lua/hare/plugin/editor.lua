@@ -14,7 +14,6 @@ return {
     -- [https://github.com/mfussenegger/nvim-lint]
     {
         'mfussenegger/nvim-lint',
-        event = { 'BufReadPost', 'BufNewFile' },
     },
 
     -- This plugin provides a collection of icons for Neovim.
