@@ -38,6 +38,7 @@ return {
         },
         event = 'VeryLazy',
         opts = {
+            log_level = vim.log.levels.WARN,
             filesystem = {
                 filtered_items = {
                     hide_dotfiles = true,
