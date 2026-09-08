@@ -180,6 +180,21 @@ local M = {
             indent = { width = 2 },
         },
     },
+    c = {
+        filetypes = { 'c', 'h' },
+        buffer_config = {
+            indent = {
+                type = 'tab',
+                width = 8,
+                display_width = 8,
+                shift_width = 8,
+            },
+            treesitter = { names = { 'c' } },
+            lsp = { name = 'clangd' },
+            formatter = { name = 'clang-format' },
+            ruler = { columns = { 80 } },
+        },
+    },
     cpp = {
         filetypes = { 'c', 'cpp', 'h', 'hpp' },
         buffer_config = {
