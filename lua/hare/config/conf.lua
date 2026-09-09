@@ -1,32 +1,38 @@
 -- The main configuration for HareVim.
 local M = {
     appearance = {
+        -- https://coolors.co/palette/01befe-ffdd00-ff7d00-ff006d-adff02-8f00ff
         cursor = {
             normal_highlight = {
-                fg = '#000000',
-                bg = '#a6e3a1',
+                fg = '#cdd6f4',
+                bg = '#FF7D00',
             },
             insert_highlight = {
-                fg = '#000000',
-                bg = '#89b4fa',
+                fg = '#cdd6f4',
+                bg = '#01BEFE',
             },
             visual_highlight = {
-                fg = '#000000',
-                bg = '#f9e2af',
+                fg = '#cdd6f4',
+                bg = '#ADFF02',
             },
             command_highlight = {
-                fg = '#000000',
-                bg = '#f38ba8',
+                fg = '#cdd6f4',
+                bg = '#FF006D',
             },
             terminal_highlight = {
-                fg = '#000000',
-                bg = '#94e2d5',
+                fg = '#cdd6f4',
+                bg = '#8F00FF',
             },
         },
         cursor_line = {
             enabled = true,
             highlight = {
                 bg = '#24273a',
+            },
+        },
+        visual = {
+            highlight = {
+                bg = '#495057',
             },
         },
     },

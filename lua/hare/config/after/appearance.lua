@@ -16,6 +16,9 @@ utils.set_hl('CursorVisual', conf.appearance.cursor.visual_highlight)
 utils.set_hl('CursorCommand', conf.appearance.cursor.command_highlight)
 utils.set_hl('CursorTerminal', conf.appearance.cursor.terminal_highlight)
 
+-- Set the highlight for visual regions.
+utils.set_hl('Visual', conf.appearance.visual.highlight)
+
 -- Enable and set cursor line highlight if the configuration enables it. The
 -- cursor line refers to the line where the cursor is currently located. This
 -- only applies to normal and insert modes.
