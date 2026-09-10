@@ -129,12 +129,12 @@ local M = {
             -- The Mason packages for the formatter.
             packages = {},
         },
-        debugger = {
-            -- Whether to enable the debugger.
+        dap = {
+            -- Whether to enable the DAP.
             enabled = true,
-            -- The debugger to use.
+            -- The DAP to use.
             name = '',
-            -- The Mason packages for the debugger.
+            -- The Mason packages for the DAP.
             packages = {},
         },
         -- Whether to format the buffer automatically on save.

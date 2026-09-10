@@ -5,7 +5,7 @@
 ---@field lsp? hare.buffer.lsp
 ---@field linter? hare.buffer.linter
 ---@field formatter? hare.buffer.formatter
----@field debugger? hare.buffer.debugger
+---@field dap? hare.buffer.dap
 ---@field format_on_save? boolean
 ---
 ---@class hare.buffer.indent
@@ -44,7 +44,7 @@
 ---@field name? string
 ---@field packages? hare.buffer._.mason_package[]
 ---
----@class hare.buffer.debugger
+---@class hare.buffer.dap
 ---@field enabled? boolean
 ---@field name? string
 ---@field packages? hare.buffer._.mason_package[]

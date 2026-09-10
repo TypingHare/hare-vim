@@ -13,6 +13,7 @@ local M = {
             treesitter = { names = { 'lua' } },
             lsp = { name = 'lua_ls' },
             formatter = { name = 'stylua' },
+            dap = { name = 'local-lua-debugger-vscode' },
         },
     },
     json = {
@@ -51,6 +52,7 @@ local M = {
             lsp = { name = 'bashls' },
             linter = { name = 'shellcheck' },
             formatter = { name = 'shfmt' },
+            dap = { name = 'bash-debug-adapter' },
         },
     },
     make = {
@@ -102,6 +104,7 @@ local M = {
             lsp = { name = 'gopls' },
             linter = { name = 'golangci-lint' },
             formatter = { name = 'gofumpt' },
+            dap = { name = 'delve' },
         },
     },
     python = {
@@ -109,6 +112,7 @@ local M = {
         buffer_config = {
             treesitter = { names = { 'python' } },
             lsp = { name = 'pyright' },
+            dap = { name = 'debugpy' },
         },
     },
     java = {
@@ -117,6 +121,7 @@ local M = {
             treesitter = { names = { 'java' } },
             lsp = { name = 'jdtls' },
             formatter = { name = 'google-java-format' },
+            dap = { name = 'java-debug-adapter' },
         },
     },
     kotlin = {
@@ -127,6 +132,7 @@ local M = {
             linter = { name = 'ktlint' },
             formatter = { name = 'ktlint' },
             ruler = { columns = { 100 } },
+            dap = { name = 'kotlin-debug-adapter' },
         },
     },
     javascript = {
@@ -143,6 +149,7 @@ local M = {
             lsp = { name = 'ts_ls' },
             formatter = { name = 'prettier' },
             linter = { name = 'eslint-lsp' },
+            dap = { name = 'js-debug-adapter' },
         },
     },
     typescript = {
@@ -160,6 +167,7 @@ local M = {
             lsp = { name = 'ts_ls' },
             formatter = { name = 'prettier' },
             linter = { name = 'eslint-lsp' },
+            dap = { name = 'js-debug-adapter' },
         },
     },
     css = {
@@ -193,6 +201,7 @@ local M = {
             lsp = { name = 'clangd' },
             formatter = { name = 'clang-format' },
             ruler = { columns = { 80 } },
+            dap = { name = 'codelldb' },
         },
     },
     cpp = {
@@ -202,6 +211,7 @@ local M = {
             formatter = { name = 'clang-format' },
             lsp = { name = 'clangd' },
             ruler = { columns = { 80 } },
+            dap = { name = 'codelldb' },
         },
     },
     sql = {
@@ -219,6 +229,7 @@ local M = {
             lsp = { name = 'svelte' },
             formatter = { name = 'prettier' },
             indent = { width = 2 },
+            dap = { name = 'js-debug-adapter' },
         },
     },
     systemd = {

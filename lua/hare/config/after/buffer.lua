@@ -321,7 +321,7 @@ if ok_mason_registry and ok_mappings then
     --- @param tool_entry hare.buffer.lsp
     ---     | hare.buffer.formatter
     ---     | hare.buffer.linter
-    ---     | hare.buffer.debugger
+    ---     | hare.buffer.dap
     ---     - A mason package entry.
     local resolve_package_names = function(name_list, tool_entry)
         if not tool_entry then
@@ -349,7 +349,7 @@ if ok_mason_registry and ok_mappings then
         resolve_package_names(package_names, buffer_conf.lsp)
         resolve_package_names(package_names, buffer_conf.formatter)
         resolve_package_names(package_names, buffer_conf.linter)
-        resolve_package_names(package_names, buffer_conf.debugger)
+        resolve_package_names(package_names, buffer_conf.dap)
     end
 
     local lspconfig_to_package = mappings.get_mason_map().lspconfig_to_package
@@ -490,6 +490,7 @@ else
     )
 end
 
+-- Set up linters.
 local ok_lint, lint = pcall(require, 'lint')
 if ok_lint then
     ---@type table<string, string[]>
@@ -541,6 +542,49 @@ if ok_lint then
 else
     vim.notify(
         'Plugin "nvim-lint" not installed; skipping linter setup.',
+        vim.log.levels.WARN
+    )
+end
+
+-- Set up DAPs.
+local ok_mason_nvim_dap, mason_nvim_dap = pcall(require, 'mason-nvim-dap')
+if ok_mason_nvim_dap then
+    local source_mappings = require 'mason-nvim-dap.mappings.source'
+
+    ---@type string[]
+    local dap_adapters = {}
+    local function add_dap_adapter(package_name)
+        local adapter_name = source_mappings.package_to_nvim_dap[package_name]
+        if
+            adapter_name and not vim.tbl_contains(dap_adapters, adapter_name)
+        then
+            table.insert(dap_adapters, adapter_name)
+        end
+    end
+
+    for _, buffer_conf in pairs(initial_buffer_confs_by_ft) do
+        ---@type hare.buffer.dap
+        local dap = buffer_conf.dap
+        if dap.enabled then
+            if dap.name and dap.name ~= '' then
+                add_dap_adapter(dap.name)
+            end
+
+            if dap.packages and vim.islist(dap.packages) then
+                for _, package_entry in pairs(dap.packages) do
+                    add_dap_adapter(package_entry.package_name)
+                end
+            end
+        end
+    end
+
+    mason_nvim_dap.setup {
+        ensure_installed = dap_adapters,
+        automatic_installation = true,
+    }
+else
+    vim.notify(
+        'Plugin "mason-nvim-dap" not installed; skipping DAP setup.',
         vim.log.levels.WARN
     )
 end
