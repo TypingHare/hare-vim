@@ -257,4 +257,106 @@ return {
         'j-hui/fidget.nvim',
         config = true,
     },
+
+    -- This plugin is a Debug Adapter Protocol (DAP) client implementation.
+    --
+    -- [https://github.com/mfussenegger/nvim-dap]
+    {
+        'mfussenegger/nvim-dap',
+        dependencies = {
+            'williamboman/mason.nvim',
+            'jay-babu/mason-nvim-dap.nvim',
+        },
+        config = function()
+            local dap = require 'dap'
+            local dapui = require 'dapui'
+
+            dapui.setup()
+
+            -- Automatically open/close debugger UI
+            dap.listeners.before.attach.dapui_config = function()
+                dapui.open()
+            end
+
+            dap.listeners.before.launch.dapui_config = function()
+                dapui.open()
+            end
+
+            dap.listeners.before.event_terminated.dapui_config = function()
+                dapui.close()
+            end
+
+            dap.listeners.before.event_exited.dapui_config = function()
+                dapui.close()
+            end
+
+            -- Keymaps
+            vim.keymap.set(
+                'n',
+                '<leader>db',
+                dap.toggle_breakpoint,
+                { desc = 'Toggle Breakpoint', silent = true }
+            )
+            vim.keymap.set('n', '<leader>dB', function()
+                dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+            end, {
+                desc = 'Set Conditional Breakpoint',
+                silent = true,
+            })
+            vim.keymap.set(
+                'n',
+                '<leader>dc',
+                dap.continue,
+                { desc = 'Continue', silent = true }
+            )
+            vim.keymap.set(
+                'n',
+                '<leader>dv',
+                dap.step_over,
+                { desc = 'Step Over', silent = true }
+            )
+            vim.keymap.set(
+                'n',
+                '<leader>di',
+                dap.step_into,
+                { desc = 'Step Into', silent = true }
+            )
+            vim.keymap.set(
+                'n',
+                '<leader>do',
+                dap.step_out,
+                { desc = 'Step Out', silent = true }
+            )
+
+            vim.keymap.set('n', '<leader>du', dapui.toggle, {
+                desc = 'Open DAP UI',
+                silent = true,
+            })
+
+            vim.keymap.set('n', '<leader>dr', dap.repl.open, {
+                desc = 'Open REPL',
+                silent = true,
+            })
+        end,
+    },
+
+    -- This plugin provides a UI for nvim-dap.
+    --
+    -- [https://github.com/rcarriga/nvim-dap-ui]
+    {
+        'rcarriga/nvim-dap-ui',
+        dependencies = {
+            'nvim-neotest/nvim-nio',
+        },
+    },
+
+    -- This plugin runs configured tasks.
+    --
+    -- [https://github.com/stevearc/overseer.nvim]
+    {
+        'stevearc/overseer.nvim',
+        opts = {
+            dap = true,
+        },
+    },
 }
