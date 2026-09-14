@@ -118,10 +118,12 @@ local M = {
     java = {
         filetypes = { 'java' },
         buffer_config = {
+            ruler = { columns = { 100 } },
             treesitter = { names = { 'java' } },
-            lsp = { name = 'jdtls' },
+            lsp = { name = 'jdtls', enabled = false },
             formatter = { name = 'google-java-format' },
             dap = { name = 'java-debug-adapter' },
+            format_on_save = false,
         },
     },
     kotlin = {
