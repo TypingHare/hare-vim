@@ -85,7 +85,7 @@ local M = {
             treesitter = { names = { 'markdown' } },
             lsp = {},
             linter = {},
-            formatter = {},
+            formatter = { name = 'prettier' },
         },
     },
     latex = {
@@ -123,7 +123,6 @@ local M = {
             lsp = { name = 'jdtls', enabled = false },
             formatter = { name = 'google-java-format' },
             dap = { name = 'java-debug-adapter' },
-            format_on_save = false,
         },
     },
     kotlin = {
