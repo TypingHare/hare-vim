@@ -118,6 +118,7 @@ local M = {
     java = {
         filetypes = { 'java' },
         buffer_config = {
+            indent = { width = 2 },
             ruler = { columns = { 100 } },
             treesitter = { names = { 'java' } },
             lsp = { name = 'jdtls', enabled = false },
