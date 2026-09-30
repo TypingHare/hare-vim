@@ -190,6 +190,13 @@ local M = {
             indent = { width = 2 },
         },
     },
+    xml = {
+        filetypes = { 'xml' },
+        buffer_config = {
+            treesitter = { names = { 'xml' } },
+            lsp = { name = 'lemminx' },
+        },
+    },
     c = {
         filetypes = { 'c', 'h' },
         buffer_config = {

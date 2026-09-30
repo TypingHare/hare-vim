@@ -1,6 +1,10 @@
 return {
-    -- [https://github.com/mfussenegger/nvim-jdtls]
+    -- [https://github.com/nvim-java/nvim-java]
     {
-        'mfussenegger/nvim-jdtls',
+        'nvim-java/nvim-java',
+        config = function()
+            require('java').setup()
+            vim.lsp.enable 'jdtls'
+        end,
     },
 }
