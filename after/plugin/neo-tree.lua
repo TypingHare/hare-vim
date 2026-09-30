@@ -1,10 +1,17 @@
+-- Open the Neo-tree window.
+vim.keymap.set(
+    'n',
+    '<leader>n',
+    ':Neotree<CR>',
+    { desc = 'Open Neotree', silent = true }
+)
+
 local ok, neotree = pcall(require, 'neo-tree')
 if not ok or not neotree.config or not neotree.config.filesystem then
     return
 end
 
 local function has_pom_xml(path)
-    vim.print(path)
     if path == nil then
         return false
     end
@@ -27,11 +34,3 @@ local git_root = git_marker and vim.fs.dirname(git_marker) or nil
 
 neotree.config.filesystem.group_empty_dirs = has_pom_xml(git_root)
     or has_pom_xml(cwd)
-
--- Open the Neo-tree window.
-vim.keymap.set(
-    'n',
-    '<leader>n',
-    ':Neotree<CR>',
-    { desc = 'Open Neotree', silent = true }
-)
