@@ -9,6 +9,12 @@ return {
                 style = 'vulgaris',
                 transparent = true,
                 lualine = { transparent = true },
+                highlights = {
+                    -- Java reports declaration keywords as semantic modifiers.
+                    -- Color them as keywords, not types.
+                    ['@lsp.type.modifier.java'] = { link = '@keyword' },
+                    ['@lsp.type.annotation.java'] = { link = '@attribute' },
+                },
             }
             require('bamboo').load()
         end,

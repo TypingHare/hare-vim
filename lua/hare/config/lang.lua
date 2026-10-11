@@ -193,6 +193,8 @@ local M = {
     xml = {
         filetypes = { 'xml' },
         buffer_config = {
+            indent = { width = 2 },
+            formatter = { name = 'xmlformatter' },
             treesitter = { names = { 'xml' } },
             lsp = { name = 'lemminx' },
         },
