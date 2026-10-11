@@ -15,6 +15,8 @@ return {
     -- [https://github.com/MunifTanjim/nui.nvim]
     {
         'MunifTanjim/nui.nvim',
+        -- Keep Neo-tree on the stable tree renderer.
+        version = '0.4.0',
     },
 
     -- This plugin registers a set of icons keyed by filename and filetype.
