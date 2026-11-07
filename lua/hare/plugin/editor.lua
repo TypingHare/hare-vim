@@ -95,6 +95,9 @@ return {
             opts.fuzzy = { implementation = 'prefer_rust' }
             opts.sources = {
                 default = { 'lsp', 'path' },
+                per_filetype = {
+                    sql = { 'lsp', 'omni', 'snippets', 'path' },
+                },
                 providers = {},
             }
 

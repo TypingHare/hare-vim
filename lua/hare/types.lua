@@ -30,21 +30,25 @@
 ---@field executable string
 ---
 ---@class hare.buffer.lsp
+---@field mason? boolean Install through Mason (defaults to true).
 ---@field enabled? boolean
 ---@field name? string
 ---@field packages? hare.buffer._.mason_package[]
 ---
 ---@class hare.buffer.linter
+---@field mason? boolean Install through Mason (defaults to true).
 ---@field enabled? boolean
 ---@field name? string
 ---@field packages? hare.buffer._.mason_package[]
 ---
 ---@class hare.buffer.formatter
+---@field mason? boolean Install through Mason (defaults to true).
 ---@field enabled? boolean
 ---@field name? string
 ---@field packages? hare.buffer._.mason_package[]
 ---
 ---@class hare.buffer.dap
+---@field mason? boolean Install through Mason (defaults to true).
 ---@field enabled? boolean
 ---@field name? string
 ---@field packages? hare.buffer._.mason_package[]

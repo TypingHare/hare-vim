@@ -83,7 +83,7 @@ local M = {
         buffer_config = {
             ruler = { enabled = false },
             treesitter = { names = { 'markdown' } },
-            lsp = {},
+            lsp = { name = 'marksman' },
             linter = {},
             formatter = { name = 'prettier' },
         },
@@ -115,14 +115,28 @@ local M = {
             dap = { name = 'debugpy' },
         },
     },
+    ocaml = {
+        filetypes = { 'ocaml', 'ocamlinterface' },
+        buffer_config = {
+            indent = { width = 2, display_width = 2, shift_width = 2 },
+            -- Native syntax supports implementations, interfaces and lexer /
+            -- parser sources, which Neovim can all detect as 'ocaml'.
+            treesitter = { enabled = false },
+            -- Install in the project's opam switch to match its compiler.
+            lsp = { name = 'ocamllsp', mason = false },
+            formatter = { name = 'ocamlformat', mason = false },
+            -- Compiler warnings and Dune diagnostics come from ocamllsp.
+            linter = { enabled = false },
+        },
+    },
     java = {
         filetypes = { 'java' },
         buffer_config = {
-            indent = { width = 2 },
+            indent = { width = 4 },
             ruler = { columns = { 100 } },
             treesitter = { names = { 'java' } },
             lsp = { name = 'jdtls', enabled = false },
-            formatter = { name = 'google-java-format' },
+            formatter = { name = 'google-java-format', enabled = false },
             dap = { name = 'java-debug-adapter' },
         },
     },
@@ -228,7 +242,7 @@ local M = {
     sql = {
         filetypes = { 'sql' },
         buffer_config = {
-            treesitter = { names = { 'sql' } },
+            treesitter = { names = { 'sql' }, highlight_enabled = false },
             lsp = { name = 'sqls' },
             formatter = { name = 'sqruff' },
         },

@@ -324,7 +324,7 @@ if ok_mason_registry and ok_mappings then
     ---     | hare.buffer.dap
     ---     - A mason package entry.
     local resolve_package_names = function(name_list, tool_entry)
-        if not tool_entry then
+        if not tool_entry or tool_entry.mason == false then
             return
         end
 
